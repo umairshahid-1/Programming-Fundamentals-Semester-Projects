@@ -11,7 +11,6 @@ void gotoxy(int x, int y);
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Colour Function
 void Header();
 char Entering();
-//new
 
 // Functions for Admin
 string Admin_Entering();
