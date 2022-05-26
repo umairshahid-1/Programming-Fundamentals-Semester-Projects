@@ -9,6 +9,7 @@ using namespace std;
 void clearscreen();
 void gotoxy(int x, int y);
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Colour Function
+void mainHeader();
 void Header();
 char Entering();
 
@@ -42,17 +43,17 @@ void Display_Stock_Header();
 int Add_Stock_Header(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Product_count);
 int Input_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Product_count);
 void Add_Stock_In_Array(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], string Name, float Quantity, float Purchase_Price, float Selling_Price, int Product_count);
-void Array_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count);
+void Array_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount);
 
 // Functions for Updating Stock
 void Update_Stock_Header();
 void Update(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Option);
-void Updating_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count);
+void Updating_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount);
 
 // Function for Deleting Stock
 void Delete_Stock_Header();
-int Delete(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count, int Option);
-int Deleting_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count);
+int Delete(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount, int Option);
+int Deleting_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount);
 
 // Function for Reading Message
 void Reading_Message(string Message);
@@ -65,9 +66,16 @@ bool Customer_SignIn(string Customers_Name[], string Customers_Password[], int D
 bool Customer_Checking(string Customers_Name[], string Customers_Password[], string Name, string Password, int Data_Count);
 int Customer_Menu();
 
+// Function for Add Prodcuts to Cart
+void add_products_to_cart(string Product_Names[], float Quantities[], float Selling_Prices[], int arrayCount);
+int load_for_shoping(string Product_Names[], float Quantities[], float Selling_Prices[]);
+void array_data_for_shoping(string Product_Names[], float Quantities[], float Selling_Prices[], int arrayCount);
+void display_stock_header_for_Shoping();
+void addtoCart(int arrayCount);
+
 // File Handling
 void store(string Product_Name[], float Quantity[], float Purchase_Prices[], float Selling_Price[], int Product_count);
-void Updatefile(string Product_Name[], float Quantity[], float Purchase_Prices[], float Selling_Price[], int Array_count);
+void Updatefile(string Product_Name[], float Quantity[], float Purchase_Prices[], float Selling_Price[], int arrayCount);
 string parseData(string record, int field);
 int load(string Product_Name[], float Quantity[], float Purchase_Prices[], float Selling_Price[]);
 void Employees_Data_Store(string ID[], string Passwords[], int employeeCount);
@@ -96,7 +104,7 @@ main() // ********** Main **********
   string Customers_Password[Records];
 
   // Reading from File
-  int Array_count = 0;
+  int arrayCount = 0;
 
   // Reading Admin message
   string Message = "";
@@ -131,20 +139,20 @@ main() // ********** Main **********
 
                 system("CLS");
                 View_Stock_Header();
-                Array_count = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
+                arrayCount = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
 
                 if (Option == '1') // Assending
                 {
-                  Sorting1(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                  Sorting1(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
+                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
                 }
 
                 else if (Option == '2') // Decesending
                 {
-                  Sorting2(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                  Sorting2(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
+                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
                 }
-                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
                 system("CLS");
               }
 
@@ -156,7 +164,8 @@ main() // ********** Main **********
 
               else if (Option == 3) // Gross Income
               {
-                cout << "Gross Income" << endl;
+                Message = Leaving_Message();
+                // cout << "Gross Income" << endl;
               }
 
               else if (Option == 4) // Transfer Salaries
@@ -186,7 +195,7 @@ main() // ********** Main **********
 
               else if (Option == 9) // Leave Message
               {
-                Message = Leaving_Message();
+                // Message = Leaving_Message();
               }
 
               else if (Option != 0) // Incase of wrong option in Admin Menu
@@ -266,17 +275,17 @@ main() // ********** Main **********
               else if (Option == 2) // Update Stock
               {
                 Update_Stock_Header();
-                Array_count = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
-                Updating_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                arrayCount = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
+                Updating_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
+                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
               }
 
               else if (Option == 3) // Delete Stock
               {
                 Delete_Stock_Header();
-                Array_count = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
-                Array_count = Deleting_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                arrayCount = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
+                arrayCount = Deleting_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
+                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
               }
 
               else if (Option == 4) // View Stock
@@ -286,20 +295,20 @@ main() // ********** Main **********
 
                 system("CLS");
                 View_Stock_Header();
-                Array_count = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
+                arrayCount = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
 
                 if (Option == '1') // Assending
                 {
-                  Sorting1(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                  Sorting1(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
+                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
                 }
 
                 else if (Option == '2') // Decesending
                 {
-                  Sorting2(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                  Sorting2(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
+                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
                 }
-                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
+                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount);
                 system("CLS");
               }
 
@@ -372,28 +381,11 @@ main() // ********** Main **********
               Option = Customer_Menu(); // Here Customers can select what to do
               system("CLS");
 
-              if (Option == 1) // View Stock
+              if (Option == 1) // Add Products to cart
               {
-                char Option = '0';
-                Option = Sorting_Order(); // Ask in which do you want to see the sorting with quantity based
-
-                system("CLS");
-                View_Stock_Header();
-                Array_count = load(Product_Names, Quantities, Purchase_Prices, Selling_Prices);
-
-                if (Option == '1') // Assending
-                {
-                  Sorting1(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                }
-
-                else if (Option == '2') // Decesending
-                {
-                  Sorting2(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                  Array_Data(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                }
-                Updatefile(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count);
-                system("CLS");
+                display_stock_header_for_Shoping();
+                arrayCount = load_for_shoping(Product_Names, Quantities, Selling_Prices);
+                array_data_for_shoping(Product_Names, Quantities, Selling_Prices, arrayCount);
               }
 
               else if (Option != 0) // Incase of wrong option in Customers Menu
@@ -587,13 +579,13 @@ int Admin_Menu() // Menu Function for Admin , Select a option what to do and to 
   SetConsoleTextAttribute(hConsole, 2); // Green
   cout << "<1> View Stock " << endl;
   cout << "<2> Add New Employees " << endl;
-  cout << "<3> Gross Income " << endl;
+  cout << "<3> Leave Message" << endl;
   cout << "<4> Transfer Salaries " << endl;
   cout << "<5> Pay Bills " << endl;
   cout << "<6> Total Profit " << endl;
   cout << "<7> History of Sales " << endl;
   cout << "<8> Offer Discount " << endl;
-  cout << "<9> Leave Message" << endl;
+  cout << "<9> Gross Income" << endl;
   cout << "<0> Log Out" << endl;
 
   SetConsoleTextAttribute(hConsole, 3); // Aqua
@@ -970,10 +962,10 @@ void Add_Stock_In_Array(string Product_Names[], float Quantities[], float Purcha
   Selling_Prices[Product_count] = Selling_Price;
 }
 
-void Array_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count) // Displaying the Data of the Array
+void Array_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount) // Displaying the Data of the Array
 {
   int y = 9;
-  for (int x = 0; x < Array_count; x++)
+  for (int x = 0; x < arrayCount; x++)
   {
     gotoxy(0, y);
     cout << x + 1;
@@ -1040,10 +1032,10 @@ void Update(string Product_Names[], float Quantities[], float Purchase_Prices[],
   Selling_Prices[Option - 1] = Selling_Price;
 }
 
-void Updating_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count) // Array before updating , Displaying the Array
+void Updating_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount) // Array before updating , Displaying the Array
 {
   int y = 9;
-  for (int x = 0; x < Array_count; x++)
+  for (int x = 0; x < arrayCount; x++)
   {
     gotoxy(0, y);
     cout << x + 1;
@@ -1094,11 +1086,11 @@ void Delete_Stock_Header() // Function Declaration For Deleting Stock Header
   Display_Stock_Header();
 }
 
-int Delete(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count, int Option) // Actual Function for Deleting the Data from the Array
+int Delete(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount, int Option) // Actual Function for Deleting the Data from the Array
 {
-  if (Array_count > 0)
+  if (arrayCount > 0)
   {
-    for (int x = Option - 1; x < Array_count - 1; x++)
+    for (int x = Option - 1; x < arrayCount - 1; x++)
     {
       Product_Names[x] = Product_Names[x + 1];
       Quantities[x] = Quantities[x + 1];
@@ -1106,15 +1098,15 @@ int Delete(string Product_Names[], float Quantities[], float Purchase_Prices[], 
       Selling_Prices[x] = Selling_Prices[x + 1];
     }
 
-    Array_count--; // Because after Deletition , Size of the Array will be decrease
+    arrayCount--; // Because after Deletition , Size of the Array will be decrease
   }
-  return Array_count;
+  return arrayCount;
 }
 
-int Deleting_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int Array_count) // Array before Deleting , Displaying the Array
+int Deleting_Data(string Product_Names[], float Quantities[], float Purchase_Prices[], float Selling_Prices[], int arrayCount) // Array before Deleting , Displaying the Array
 {
   int y = 9;
-  for (int x = 0; x < Array_count; x++)
+  for (int x = 0; x < arrayCount; x++)
   {
     gotoxy(0, y);
     cout << x + 1;
@@ -1138,7 +1130,7 @@ int Deleting_Data(string Product_Names[], float Quantities[], float Purchase_Pri
 
   if (Option > 0)
   {
-    Array_count = Delete(Product_Names, Quantities, Purchase_Prices, Selling_Prices, Array_count, Option);
+    arrayCount = Delete(Product_Names, Quantities, Purchase_Prices, Selling_Prices, arrayCount, Option);
 
     gotoxy(40, y + 3);
     SetConsoleTextAttribute(hConsole, 4); // Red
@@ -1149,7 +1141,7 @@ int Deleting_Data(string Product_Names[], float Quantities[], float Purchase_Pri
 
   system("CLS");
 
-  return Array_count;
+  return arrayCount;
 }
 
 void Reading_Message(string Message) // Function Header for Reading Message
@@ -1304,7 +1296,7 @@ int Customer_Menu() // Menu Function for Customer , Select a option what to do a
   cout << "Select one of the following option number..." << endl;
 
   SetConsoleTextAttribute(hConsole, 2); // Green
-  cout << "<1> View Stock " << endl;
+  cout << "<1> Add Products to Cart " << endl;
   cout << "<2> View Discounted Products " << endl;
   cout << "<0> Log Out" << endl;
 
@@ -1443,4 +1435,100 @@ int Customers_Data_Load(string Customers_Name[], string Customers_Password[])
   }
   f.close();
   return idx;
+}
+
+void add_products_to_cart(string Product_Names[], float Quantities[], float Selling_Prices[], int arrayCount)
+{
+  arrayCount = load_for_shoping(Product_Names, Quantities, Selling_Prices);
+  array_data_for_shoping(Product_Names, Quantities, Selling_Prices, arrayCount);
+}
+
+void array_data_for_shoping(string Product_Names[], float Quantities[], float Selling_Prices[], int arrayCount) // Displaying the Data of the Array
+{
+  int y = 9;
+  for (int x = 0; x < arrayCount; x++)
+  {
+    gotoxy(0, y);
+    cout << x + 1;
+    gotoxy(20, y);
+    cout << Product_Names[x];
+    gotoxy(47, y);
+    cout << Selling_Prices[x];
+    gotoxy(70, y);
+    cout << Quantities[x];
+    y++;
+  }
+  getch();
+}
+
+int load_for_shoping(string Product_Names[], float Quantities[], float Selling_Prices[])
+{
+  fstream f;
+  string record;
+  int idx = 0;
+  f.open("Stock.txt", ios::in);
+  while (!(f.eof()))
+  {
+    getline(f, record);
+    if (record != "")
+    {
+      Product_Names[idx] = parseData(record, 1);
+      Quantities[idx] = stof(parseData(record, 2));
+      Selling_Prices[idx] = stof(parseData(record, 4));
+      idx++;
+    }
+  }
+  f.close();
+  return idx;
+}
+
+void display_stock_header_for_Shoping() // function for just display
+{
+  system("CLS");
+  SetConsoleTextAttribute(hConsole, 3); // Aqua
+  gotoxy(30, 0);
+  cout << "---------------------";
+  gotoxy(30, 1);
+  cout << " **** CUSTOMERS **** ";
+  gotoxy(30, 2);
+  cout << "---------------------";
+  SetConsoleTextAttribute(hConsole, 4); // Red
+  gotoxy(30, 4);
+  cout << "       SHOPING";
+
+  SetConsoleTextAttribute(hConsole, 6); // Yellow
+  gotoxy(0, 6);
+  cout << "Sr.No";
+  gotoxy(20, 6);
+  cout << "Product Name";
+  gotoxy(47, 6);
+  cout << "Selling Price";
+  gotoxy(70, 6);
+  cout << "Stock Left";
+
+  SetConsoleTextAttribute(hConsole, 7); // White
+}
+
+void addtoCart(int arrayCount)
+{
+  int number;
+  cout << endl;
+  cout << arrayCount;
+  SetConsoleTextAttribute(hConsole, 4); // Red
+  cout << "How many things you want to buy: ";
+  SetConsoleTextAttribute(hConsole, 7); // White
+  cin >> number;
+  int num, quantity;
+
+  if (number > 0) //& number < arrayCount
+  {
+    for (int x = 0; x < number; x++)
+    {
+      cout << "Enter the Sr.No of the Product: ";
+      cin >> num;
+      cout << "Enter the Quantity: ";
+      cin >> quantity;
+    }
+  }
+  system("CLS");
 }
