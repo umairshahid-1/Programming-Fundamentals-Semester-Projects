@@ -167,9 +167,9 @@ void gamePlay(bool gameRunning, char maze[][61], int &xIdx, int &yIdx, int &poli
   while (time(NULL) <= end && gameRunning == true)
   {
     Sleep(200);
-    int seconds = 120;
-    timeDisplay(seconds);
-    seconds--;
+    // int seconds = 120;
+    // timeDisplay(seconds);
+    // seconds--;
 
     int position = random();
 
