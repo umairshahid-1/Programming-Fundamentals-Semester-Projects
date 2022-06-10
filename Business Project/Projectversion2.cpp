@@ -10,7 +10,6 @@ void clearscreen();
 void gotoxy(int x, int y);
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Colour Function
 void mainHeader();
-void Header();
 char Entering();
 
 // Functions for Admin
@@ -440,7 +439,7 @@ main() // ********** Main **********
     else if (Main_Option == '5') // At 5 Exit
     {
       system("CLS");
-      Header();
+      mainHeader();
       cout << "\n";
       SetConsoleTextAttribute(hConsole, 7);
       cout << "Thanks for using this Applicatin! " << endl;
@@ -450,7 +449,7 @@ main() // ********** Main **********
     else
     {
       system("CLS");
-      Header();
+      mainHeader();
       cout << "\n";
       SetConsoleTextAttribute(hConsole, 4); // Red
       cout << "You Enter a Wrong Number! " << endl;
@@ -477,29 +476,28 @@ void gotoxy(int x, int y) // function to use for going on specfic Position on co
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinates);
 }
 
-void Header() // Header on Start
+void mainHeader()
 {
   SetConsoleTextAttribute(hConsole, 6); // yellow
-  gotoxy(50, 0);
-  cout << "-----------------------------------------------------------";
-  gotoxy(50, 1);
-  cout << "!              Simple Shop Management System              !";
-  gotoxy(50, 2);
-  cout << "-----------------------------------------------------------";
-
-  gotoxy(50, 4);
-  cout << "              ********************************";
-  gotoxy(50, 5);
-  cout << "              !           MAIN MENU          !";
-  gotoxy(50, 6);
-  cout << "              ********************************";
-  cout << endl;
+  cout << "   _____                          __  ___           __        __                                       " << endl;
+  cout << "  / ___/__  ______  ___  _____   /  |/  /___ ______/ /_____  / /_                                      " << endl;
+  cout << "  \\__ \\/ / / / __ \\/ _ \\/ ___/  / /|_/ / __ `/ ___/ //_/ _ \\/ __/                                      " << endl;
+  cout << " ___/ / /_/ / /_/ /  __/ /     / /  / / /_/ / /  / ,< /  __/ /_                                        " << endl;
+  cout << "/____/\\__,_/ .___/\\___/_/     /_/  /_/\\__,_/_/  /_/|_|\\___/\\__/                                        " << endl;
+  cout << "          /_/                                                                                          " << endl;
+  cout << "    __  ___                                                  __     _____            __                " << endl;
+  cout << "   /  |/  /___ _____  ____ _____ ____  ____ ___  ___  ____  / /_   / ___/__  _______/ /____  ____ ___  " << endl;
+  cout << "  / /|_/ / __ `/ __ \\/ __ `/ __ `/ _ \\/ __ `__ \\/ _ \\/ __ \\/ __/   \\__ \\/ / / / ___/ __/ _ \\/ __ `__ \\ " << endl;
+  cout << " / /  / / /_/ / / / / /_/ / /_/ /  __/ / / / / /  __/ / / / /_    ___/ / /_/ (__  ) /_/  __/ / / / / / " << endl;
+  cout << "/_/  /_/\\__,_/_/ /_/\\__,_/\\__, /\\___/_/ /_/ /_/\\___/_/ /_/\\__/   /____/\\__, /____/\\__/\\___/_/ /_/ /_/  " << endl;
+  cout << "                         /____/                                       /____/                           " << endl;
 }
 
 char Entering() // Who Is Entering
 {
-  Header();
+  mainHeader();
   SetConsoleTextAttribute(hConsole, 2); // Green
+  cout << endl;
   cout << "Select one of the following option number..." << endl;
   cout << endl;
   cout << "1. Admin" << endl;
