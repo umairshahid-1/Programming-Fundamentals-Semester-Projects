@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "concepts": "cpp",
+    "deque": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "vector": "cpp",
+    "istream": "cpp",
+    "ostream": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
+}

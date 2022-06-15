@@ -1,3 +1,1 @@
-int seconds = 120;
-    // timeDisplay(seconds);
-    // seconds--;
+  maze[police1X][police1Y] = 'T';
