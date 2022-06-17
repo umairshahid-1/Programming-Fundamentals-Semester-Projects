@@ -1,1 +1,0 @@
-  maze[police1X][police1Y] = 'T';

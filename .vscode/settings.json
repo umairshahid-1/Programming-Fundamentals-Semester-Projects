@@ -6,7 +6,16 @@
     "unordered_map": "cpp",
     "vector": "cpp",
     "istream": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "array": "cpp",
+    "string_view": "cpp",
+    "atomic": "cpp",
+    "*.tcc": "cpp",
+    "memory_resource": "cpp",
+    "streambuf": "cpp",
+    "system_error": "cpp",
+    "tuple": "cpp",
+    "iostream": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
